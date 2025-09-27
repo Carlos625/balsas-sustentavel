@@ -1,0 +1,192 @@
+
+:root {
+    --primary-color: #1E8E3E; 
+    --secondary-color: #34A853; 
+    --dark-bg: #121212;
+    --light-bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-dark: #212529;
+    --text-light: #e9ecef;
+    --border-color: #dee2e6;
+    --font-family: 'Poppins', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-family);
+    line-height: 1.7;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+h1, h2, h3 { line-height: 1.2; margin-bottom: 1rem; font-weight: 700; }
+h2 { font-size: 2.8rem; text-align: center; }
+.section-subtitle { text-align: center; font-size: 1.1rem; max-width: 600px; margin: 0 auto 3rem auto; color: #6c757d; }
+.section-dark .section-subtitle { color: #adb5bd; }
+section { padding: 6rem 0; overflow-x: hidden; }
+
+/* Animação de Entrada */
+section > .container {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.8s forwards;
+}
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+ 
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://fia.com.br/wp-content/uploads/2023/06/2023_05_06_Desenvolvimento-Sustentavel-Capa.png') no-repeat center center/cover;
+    color: var(--text-light);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.4s, backdrop-filter 0.4s;
+    background-color: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-container.scrolled {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.site-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.site-nav .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white; 
+    text-decoration: none;
+}
+.scrolled .site-nav .logo { color: var(--primary-color); }
+
+.site-nav ul { list-style: none; display: flex; }
+.site-nav li a {
+    color: white; 
+    text-decoration: none; padding: 0.5rem 1rem; font-weight: 600; transition: color 0.3s; }
+.scrolled .site-nav li a { color: var(--text-dark); }
+.site-nav li a:hover { color: var(--secondary-color); }
+.scrolled .site-nav li a:hover { color: var(--primary-color); }
+
+.hero-content {
+    flex-grow: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+}
+.hero-content h1 {
+    font-size: 3.8rem;
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+}
+.hero-content p { font-size: 1.25rem; max-width: 600px; margin-bottom: 2rem; }
+.cta-button {
+    background-color: var(--primary-color); color: white; padding: 1rem 2.5rem;
+    text-decoration: none; border-radius: 50px; font-weight: 700;
+    transition: background-color 0.3s, transform 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.cta-button:hover { background-color: var(--secondary-color); transform: translateY(-5px); }
+
+
+.section-light { background-color: var(--light-bg); }
+
+.section-dark {
+  background: 
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), /* camada de escuridão */
+    url('https://terramagna.com.br/wp-content/uploads/2021/12/Capa-Blog1.png') 
+    no-repeat center center/cover;
+  color: var(--text-light);
+}
+
+.problem-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.problem-item {
+    background: var(--card-bg); padding: 1.5rem; border-radius: 8px; font-weight: 600;
+    display: flex; align-items: center; gap: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04); transition: transform 0.3s, box-shadow 0.3s;
+    color: var(--text-dark); 
+}
+.problem-item:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+.problem-item span { font-size: 1.5rem; }
+
+/* Seção: Registrar Ocorrência (Formulário) */
+form { max-width: 700px; margin: 2rem auto 0 auto;
+    background-color: #212121; /* Fundo do formulário no modo escuro */
+    padding: 2.5rem;
+    border-radius: 10px;
+}
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #adb5bd; }
+input[type="text"], select, textarea {
+    width: 100%; padding: 1rem; border-radius: 8px;
+    border: 1px solid #495057; background-color: #2c2c2c; /* Fundo dos inputs */
+    color: var(--text-light); font-family: var(--font-family); font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+input[type="text"]:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(30, 142, 62, 0.3);
+}
+.input-file { display: none; } /* Esconde o input de arquivo padrão */
+.file-label {
+    background-color: #383838; /* Fundo do label de arquivo */
+    border: 1px dashed #6c757d; color: #adb5bd;
+    padding: 1rem; text-align: center; border-radius: 8px; cursor: pointer; display: block;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.file-label:hover { background-color: #444444; border-color: #adb5bd; }
+.submit-button {
+    width: 100%; padding: 1rem; background-color: var(--primary-color); color: white;
+    border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
+    cursor: pointer; transition: background-color 0.3s;
+}
+.submit-button:hover { background-color: var(--secondary-color); }
+
+/* Seção: Informações */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.info-card {
+    background-color: var(--card-bg); padding: 2.5rem 2rem; border-radius: 8px;
+    border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.info-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+.info-card h3 { color: var(--primary-color); display: flex; align-items: center; gap: 0.8rem; }
+
+/* Seção: Contato */
+.contact-info { text-align: center; font-size: 1.2rem; }
+.contact-info a { color: var(--secondary-color); text-decoration: none; }
+
+/* 4. Rodapé (Footer) */
+footer { background-color: #000; color: #6c757d; text-align: center; padding: 2rem 0; font-size: 0.9rem; }
+
+/* 5. Responsividade (Media Queries) */
+@media (max-width: 768px) {
+    h2 { font-size: 2.2rem; }
+    .hero-content h1 { font-size: 2.8rem; }
+    .site-nav { flex-direction: column; }
+    .site-nav ul { margin-top: 1rem; flex-wrap: wrap; justify-content: center; }
+    .site-nav li a { padding: 0.5rem 0.75rem; }
+    .hero { height: auto; min-height: 90vh; }
+    .hero-content { padding: 4rem 0; }
+
+    /* Ajuste para navegação em mobile quando scrollada */
+    .nav-container.scrolled .site-nav {
+        flex-direction: column; /* Garante que os itens quebrem em coluna */
+    }
+}

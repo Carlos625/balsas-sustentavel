@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Comunitária de Gestão de Resíduos - Balsas (MA)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="hero">
+        <div class="nav-container">
+            <nav class="site-nav container">
+                <a href="#" class="logo">Balsas Sustentável</a>
+                <ul>
+                    <li><a href="#problema">O Problema</a></li>
+                    <li><a href="#denuncia">Registrar Ocorrência</a></li>
+                    <li><a href="#informacoes">Informações</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="hero-content container">
+            <h1>Plataforma Comunitária de Gestão de Resíduos em Balsas (MA)</h1>
+            <p>Uma iniciativa para aproximar a comunidade da gestão dos resíduos, promovendo educação ambiental, transparência e participação cidadã.</p>
+            <a href="#denuncia" class="cta-button">Faça sua parte</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="problema" class="section-light">
+            <div class="container">
+                <h2>O Problema Ambiental em Nossa Cidade</h2>
+                <p class="section-subtitle">A cidade de Balsas enfrenta sérios desafios com o manejo de resíduos sólidos. O lixão a céu aberto, próximo ao rio Balsas, provoca:</p>
+                <div class="problem-list">
+                    <div class="problem-item"><span>💧</span> Contaminação do solo e da água;</div>
+                    <div class="problem-item"><span>💨</span> Fumaça tóxica por queimadas;</div>
+                    <div class="problem-item"><span>🐀</span> Proliferação de vetores e doenças;</div>
+                    <div class="problem-item"><span>🔥</span> Poluição do ar com graves incêndios;</div>
+                    <div class="problem-item"><span>❓</span> Falta de transparência na gestão.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="denuncia" class="section-dark">
+            <div class="container">
+                <h2>Registre uma Ocorrência</h2>
+                <p class="section-subtitle">Viu um descarte irregular, foco de lixo ou queimada? Nos ajude a mapear o problema.</p>
+                <form>
+                    <div class="form-group">
+                        <label for="bairro">Bairro:</label>
+                        <input type="text" id="bairro" name="bairro" placeholder="Ex: Centro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo de problema:</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="" disabled selected>Selecione uma opção</option>
+                            <option value="queimada">Queimada</option>
+                            <option value="acumulo">Acúmulo de lixo</option>
+                            <option value="descarte">Descarte irregular</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao">Descrição:</label>
+                        <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o que você viu..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                         <label for="foto" class="file-label">
+                            Anexar Foto
+                            <input type="file" id="foto" name="foto" class="input-file">
+                        </label>
+                    </div>
+                    <button type="submit" class="submit-button">Enviar Ocorrência</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="informacoes" class="section-light">
+            <div class="container">
+                <h2>Informações e Educação Ambiental</h2>
+                <p class="section-subtitle">Pequenas ações geram grandes mudanças. Aprenda como contribuir.</p>
+                <div class="info-grid">
+                    <article class="info-card">
+                        <h3>♻️ Dicas de Reciclagem</h3>
+                        <p>Separe papel, plástico, vidro e metal. Higienize as embalagens e procure os pontos de coleta seletiva ou cooperativas locais.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>🌿 Compostagem Doméstica</h3>
+                        <p>Transforme restos de frutas, verduras e borra de café em adubo natural e rico em nutrientes para suas plantas, hortas e jardins.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>🚛 Cronograma de Coleta</h3>
+                        <p><strong>Coleta Regular:</strong><br>Segunda a Sexta - 7h às 17h<br>Prefeitura de Balsas / SAAE</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="section-dark">
+            <div class="container">
+                <h2>Contato</h2>
+                <p class="section-subtitle">Entre em contato com os órgãos responsáveis.</p>
+                <div class="contact-info">
+                    <p><strong>Prefeitura Municipal de Balsas</strong></p>
+                    <p>Secretaria de Meio Ambiente</p>
+                    <p>Email: <a href="mailto:meioambiente@balsas.ma.gov.br">meioambiente@balsas.ma.gov.br</a></p>
+                    <p>Telefone: <a href="tel:+559912345678">(99) 1234-5678</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 - Plataforma Comunitária de Gestão de Resíduos em Balsas (MA)</p>
+            <p>Projeto Extensionista Universitário</p>
+        </div>
+    </footer>
+
+    <script>
+        const navContainer = document.querySelector('.nav-container');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navContainer.classList.add('scrolled');
+            } else {
+                navContainer.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
