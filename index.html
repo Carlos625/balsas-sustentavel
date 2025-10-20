@@ -17,6 +17,8 @@
                 <ul>
                     <li><a href="#problema">O Problema</a></li>
                     <li><a href="#denuncia">Registrar Ocorrência</a></li>
+                    <li><a href="#entrega">Entregar Resíduos</a></li>
+                    <li><a href="#pontos">Meus Pontos</a></li>
                     <li><a href="#informacoes">Informações</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
@@ -78,6 +80,108 @@
             </div>
         </section>
 
+        <section id="entrega" class="section-light">
+            <div class="container">
+                <h2>Entrega de Resíduos</h2>
+                <p class="section-subtitle">Agende a entrega dos seus resíduos e acumule pontos que podem ser trocados por benefícios!</p>
+                <form id="formEntrega">
+                    <div class="form-group">
+                        <label for="tipoResiduo">Tipo de Resíduo:</label>
+                        <select id="tipoResiduo" name="tipoResiduo" required>
+                            <option value="" disabled selected>Selecione o tipo de resíduo</option>
+                            <option value="latinhas" data-pontos="50">Latinhas de Alumínio (50 pts/kg)</option>
+                            <option value="plastico" data-pontos="20">Plástico (20 pts/kg)</option>
+                            <option value="papel" data-pontos="15">Papel/Papelão (15 pts/kg)</option>
+                            <option value="vidro" data-pontos="10">Vidro (10 pts/kg)</option>
+                            <option value="metal" data-pontos="30">Metal (30 pts/kg)</option>
+                            <option value="eletronicos" data-pontos="100">Eletrônicos (100 pts/kg)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="peso">Peso (kg):</label>
+                        <input type="number" id="peso" name="peso" min="0.1" step="0.1" placeholder="Ex: 2.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postoColeta">Posto de Coleta:</label>
+                        <select id="postoColeta" name="postoColeta" required>
+                            <option value="" disabled selected>Selecione o posto de coleta</option>
+                            <option value="centro">Posto Centro - Av. Principal, 123</option>
+                            <option value="jk">Posto JK - Rua JK, 456</option>
+                            <option value="caic">Posto CAIC - Rua do CAIC, 789</option>
+                            <option value="camara">Posto Câmara - Praça da Câmara, s/n</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="horario">Horário Preferencial:</label>
+                        <select id="horario" name="horario" required>
+                            <option value="" disabled selected>Selecione o horário</option>
+                            <option value="manha">Manhã (8h - 12h)</option>
+                            <option value="tarde">Tarde (14h - 18h)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataEntrega">Data da Entrega:</label>
+                        <input type="date" id="dataEntrega" name="dataEntrega" required>
+                    </div>
+                    <div class="pontos-preview">
+                        <h3>Prévia de Pontos</h3>
+                        <p class="pontos-valor" id="pontosPrevia">0 pontos</p>
+                        <p class="pontos-descricao">Calcule automaticamente os pontos que você vai ganhar!</p>
+                    </div>
+                    <button type="submit" class="submit-button">Agendar Entrega</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="pontos" class="section-dark">
+            <div class="container">
+                <h2>Meus Pontos e Benefícios</h2>
+                <p class="section-subtitle">Troque seus pontos por benefícios em estabelecimentos parceiros</p>
+
+                <div class="saldo-pontos">
+                    <h3>Saldo Atual</h3>
+                    <p class="saldo-valor" id="saldoPontos">0 pontos</p>
+                    <p class="saldo-info">Continue entregando resíduos para acumular mais pontos!</p>
+                </div>
+
+                <h3 class="parceiros-titulo">Parceiros para Resgate</h3>
+                <div class="parceiros-grid">
+                    <div class="parceiro-card">
+                        <div class="parceiro-icon">⛽</div>
+                        <h4>Postos de Combustível</h4>
+                        <ul class="parceiro-lista">
+                            <li>500 pts = R$ 10,00 em combustível</li>
+                            <li>1000 pts = R$ 25,00 em combustível</li>
+                            <li>2000 pts = R$ 55,00 em combustível</li>
+                        </ul>
+                        <button class="btn-resgatar">Resgatar</button>
+                    </div>
+
+                    <div class="parceiro-card">
+                        <div class="parceiro-icon">💡</div>
+                        <h4>Conta de Energia</h4>
+                        <ul class="parceiro-lista">
+                            <li>600 pts = R$ 15,00 desconto</li>
+                            <li>1200 pts = R$ 35,00 desconto</li>
+                            <li>2500 pts = R$ 75,00 desconto</li>
+                        </ul>
+                        <button class="btn-resgatar">Resgatar</button>
+                    </div>
+
+                    <div class="parceiro-card">
+                        <div class="parceiro-icon">🛒</div>
+                        <h4>Supermercados</h4>
+                        <ul class="parceiro-lista">
+                            <li>400 pts = R$ 10,00 em compras</li>
+                            <li>800 pts = R$ 22,00 em compras</li>
+                            <li>1500 pts = R$ 45,00 em compras</li>
+                        </ul>
+                        <button class="btn-resgatar">Resgatar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="informacoes" class="section-light">
             <div class="container">
                 <h2>Informações e Educação Ambiental</h2>
@@ -121,6 +225,7 @@
     </footer>
 
     <script>
+        // Navegação com scroll
         const navContainer = document.querySelector('.nav-container');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -128,7 +233,82 @@
             } else {
                 navContainer.classList.remove('scrolled');
             }
-        }); 
+        });
+
+        // Sistema de Pontos - Cálculo automático
+        const tipoResiduoSelect = document.getElementById('tipoResiduo');
+        const pesoInput = document.getElementById('peso');
+        const pontosPrevia = document.getElementById('pontosPrevia');
+
+        function calcularPontos() {
+            const selectedOption = tipoResiduoSelect.options[tipoResiduoSelect.selectedIndex];
+            const pontosPorKg = selectedOption.getAttribute('data-pontos');
+            const peso = parseFloat(pesoInput.value) || 0;
+
+            if (pontosPorKg && peso > 0) {
+                const totalPontos = Math.floor(pontosPorKg * peso);
+                pontosPrevia.textContent = `${totalPontos} pontos`;
+            } else {
+                pontosPrevia.textContent = '0 pontos';
+            }
+        }
+
+        // Atualizar prévia ao mudar tipo ou peso
+        tipoResiduoSelect.addEventListener('change', calcularPontos);
+        pesoInput.addEventListener('input', calcularPontos);
+
+        // Formulário de Entrega - Processar envio
+        const formEntrega = document.getElementById('formEntrega');
+        formEntrega.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Calcular pontos ganhos
+            const selectedOption = tipoResiduoSelect.options[tipoResiduoSelect.selectedIndex];
+            const pontosPorKg = parseFloat(selectedOption.getAttribute('data-pontos'));
+            const peso = parseFloat(pesoInput.value);
+            const pontosGanhos = Math.floor(pontosPorKg * peso);
+
+            // Atualizar saldo (usando localStorage para persistência)
+            let saldoAtual = parseInt(localStorage.getItem('saldoPontos')) || 0;
+            saldoAtual += pontosGanhos;
+            localStorage.setItem('saldoPontos', saldoAtual);
+
+            // Atualizar exibição do saldo
+            atualizarSaldoPontos();
+
+            // Mostrar mensagem de sucesso
+            alert(`Entrega agendada com sucesso! Você vai ganhar ${pontosGanhos} pontos.`);
+
+            // Limpar formulário
+            formEntrega.reset();
+            pontosPrevia.textContent = '0 pontos';
+        });
+
+        // Atualizar saldo de pontos na página
+        function atualizarSaldoPontos() {
+            const saldoPontos = document.getElementById('saldoPontos');
+            const saldoAtual = parseInt(localStorage.getItem('saldoPontos')) || 0;
+            saldoPontos.textContent = `${saldoAtual} pontos`;
+        }
+
+        // Carregar saldo ao carregar a página
+        window.addEventListener('DOMContentLoaded', atualizarSaldoPontos);
+
+        // Botões de resgate
+        const botoesResgatar = document.querySelectorAll('.btn-resgatar');
+        botoesResgatar.forEach(botao => {
+            botao.addEventListener('click', function() {
+                const saldoAtual = parseInt(localStorage.getItem('saldoPontos')) || 0;
+                const card = this.closest('.parceiro-card');
+                const parceiro = card.querySelector('h4').textContent;
+
+                if (saldoAtual < 400) {
+                    alert('Você não tem pontos suficientes para este resgate. Continue entregando resíduos!');
+                } else {
+                    alert(`Resgate em ${parceiro} iniciado! Entre em contato com o estabelecimento parceiro para finalizar.`);
+                }
+            });
+        });
     </script>
 </body>
 </html>
