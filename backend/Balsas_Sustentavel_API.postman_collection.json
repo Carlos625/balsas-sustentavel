@@ -1,0 +1,789 @@
+{
+  "info": {
+    "name": "Balsas Sustentável - API",
+    "description": "API RESTful para o sistema de gestão de resíduos de Balsas (MA)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Registrar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao@email.com\",\n  \"senha\": \"senha123\",\n  \"telefone\": \"(99) 98765-4321\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "registro"]
+            },
+            "description": "Registra um novo usuário no sistema. Retorna o token JWT e os dados do usuário."
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"joao@email.com\",\n  \"senha\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Autentica o usuário. Retorna token JWT que será usado nas requisições protegidas. O token é salvo automaticamente na variável {{token}}."
+          }
+        },
+        {
+          "name": "Obter Usuário Logado",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Retorna os dados do usuário atualmente logado. Requer token JWT."
+          }
+        }
+      ],
+      "description": "Endpoints para autenticação e registro de usuários"
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Listar Todos os Usuários (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios"]
+            },
+            "description": "Lista todos os usuários cadastrados. Apenas administradores podem acessar."
+          }
+        },
+        {
+          "name": "Obter Usuário por ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DO_USUARIO"
+                }
+              ]
+            },
+            "description": "Retorna os dados de um usuário específico pelo ID."
+          }
+        },
+        {
+          "name": "Atualizar Usuário",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva Santos\",\n  \"telefone\": \"(99) 99999-9999\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DO_USUARIO"
+                }
+              ]
+            },
+            "description": "Atualiza os dados do usuário. Usuário só pode atualizar seu próprio perfil, exceto admins."
+          }
+        },
+        {
+          "name": "Obter Pontos do Usuário",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/:id/pontos",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", ":id", "pontos"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DO_USUARIO"
+                }
+              ]
+            },
+            "description": "Retorna o saldo de pontos do usuário."
+          }
+        }
+      ],
+      "description": "Endpoints para gerenciamento de usuários"
+    },
+    {
+      "name": "Ocorrências",
+      "item": [
+        {
+          "name": "Criar Ocorrência",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bairro\": \"Centro\",\n  \"tipo\": \"acumulo\",\n  \"descricao\": \"Lixo acumulado na Rua Principal próximo ao mercado\",\n  \"foto\": \"https://exemplo.com/foto.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias"]
+            },
+            "description": "Cria uma nova ocorrência/denúncia. Tipos válidos: queimada, acumulo, descarte"
+          }
+        },
+        {
+          "name": "Listar Todas as Ocorrências",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias"]
+            },
+            "description": "Lista todas as ocorrências. Endpoint público (não requer autenticação)."
+          }
+        },
+        {
+          "name": "Filtrar por Bairro",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias?bairro=Centro",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias"],
+              "query": [
+                {
+                  "key": "bairro",
+                  "value": "Centro"
+                }
+              ]
+            },
+            "description": "Filtra ocorrências por bairro."
+          }
+        },
+        {
+          "name": "Filtrar por Tipo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias?tipo=queimada",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias"],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "queimada"
+                }
+              ]
+            },
+            "description": "Filtra ocorrências por tipo (queimada, acumulo, descarte)."
+          }
+        },
+        {
+          "name": "Minhas Ocorrências",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias/user/minhas",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias", "user", "minhas"]
+            },
+            "description": "Retorna apenas as ocorrências criadas pelo usuário logado."
+          }
+        },
+        {
+          "name": "Atualizar Status (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"resolvido\",\n  \"observacoes\": \"Problema resolvido pela equipe de limpeza em 20/10/2025\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias/:id/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias", ":id", "status"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DA_OCORRENCIA"
+                }
+              ]
+            },
+            "description": "Atualiza o status da ocorrência. Apenas admins. Status: pendente, em_analise, resolvido, rejeitado"
+          }
+        },
+        {
+          "name": "Estatísticas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ocorrencias/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["ocorrencias", "stats"]
+            },
+            "description": "Retorna estatísticas agregadas de ocorrências por tipo e bairro."
+          }
+        }
+      ],
+      "description": "Endpoints para gerenciamento de ocorrências/denúncias"
+    },
+    {
+      "name": "Entregas",
+      "item": [
+        {
+          "name": "Agendar Entrega",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoResiduo\": \"latinhas\",\n  \"peso\": 2.5,\n  \"postoColeta\": \"centro\",\n  \"horario\": \"manha\",\n  \"dataEntrega\": \"2025-10-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/entregas",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas"]
+            },
+            "description": "Agenda uma entrega de resíduos. Tipos: latinhas (50pts/kg), plastico (20pts/kg), papel (15pts/kg), vidro (10pts/kg), metal (30pts/kg), eletronicos (100pts/kg). Postos: centro, jk, caic, camara. Horários: manha, tarde"
+          }
+        },
+        {
+          "name": "Minhas Entregas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/entregas/minhas",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas", "minhas"]
+            },
+            "description": "Lista todas as entregas do usuário logado."
+          }
+        },
+        {
+          "name": "Listar Todas (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/entregas",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas"]
+            },
+            "description": "Lista todas as entregas. Apenas admins."
+          }
+        },
+        {
+          "name": "Confirmar Entrega (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/entregas/:id/confirmar",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas", ":id", "confirmar"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DA_ENTREGA"
+                }
+              ]
+            },
+            "description": "Confirma a entrega e adiciona os pontos ao usuário. Apenas admins podem confirmar."
+          }
+        },
+        {
+          "name": "Cancelar Entrega",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/entregas/:id/cancelar",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas", ":id", "cancelar"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DA_ENTREGA"
+                }
+              ]
+            },
+            "description": "Cancela uma entrega agendada. Usuário pode cancelar apenas suas próprias entregas."
+          }
+        },
+        {
+          "name": "Estatísticas (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/entregas/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["entregas", "stats"]
+            },
+            "description": "Retorna estatísticas de entregas por tipo de resíduo e posto."
+          }
+        }
+      ],
+      "description": "Endpoints para gerenciamento de entregas de resíduos"
+    },
+    {
+      "name": "Resgates",
+      "item": [
+        {
+          "name": "Ver Opções de Resgate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resgates/opcoes",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates", "opcoes"]
+            },
+            "description": "Retorna todas as opções de resgate disponíveis com pontos e valores. Endpoint público."
+          }
+        },
+        {
+          "name": "Criar Resgate - Combustível",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parceiro\": \"combustivel\",\n  \"pontosUtilizados\": 500\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/resgates",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates"]
+            },
+            "description": "Cria resgate de combustível. Opções: 500pts=R$10, 1000pts=R$25, 2000pts=R$55"
+          }
+        },
+        {
+          "name": "Criar Resgate - Energia",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parceiro\": \"energia\",\n  \"pontosUtilizados\": 600\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/resgates",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates"]
+            },
+            "description": "Cria resgate de desconto na conta de energia. Opções: 600pts=R$15, 1200pts=R$35, 2500pts=R$75"
+          }
+        },
+        {
+          "name": "Criar Resgate - Supermercado",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parceiro\": \"supermercado\",\n  \"pontosUtilizados\": 400\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/resgates",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates"]
+            },
+            "description": "Cria resgate de vale-compras. Opções: 400pts=R$10, 800pts=R$22, 1500pts=R$45"
+          }
+        },
+        {
+          "name": "Meus Resgates",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resgates/meus",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates", "meus"]
+            },
+            "description": "Lista todos os resgates do usuário logado com códigos e status."
+          }
+        },
+        {
+          "name": "Utilizar Resgate (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resgates/:id/utilizar",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates", ":id", "utilizar"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DO_RESGATE"
+                }
+              ]
+            },
+            "description": "Marca o resgate como utilizado. Apenas admins (estabelecimentos parceiros)."
+          }
+        },
+        {
+          "name": "Cancelar Resgate",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resgates/:id/cancelar",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates", ":id", "cancelar"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "ID_DO_RESGATE"
+                }
+              ]
+            },
+            "description": "Cancela o resgate e devolve os pontos ao usuário. Apenas resgates pendentes."
+          }
+        },
+        {
+          "name": "Estatísticas (Admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resgates/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["resgates", "stats"]
+            },
+            "description": "Retorna estatísticas de resgates por parceiro e status."
+          }
+        }
+      ],
+      "description": "Endpoints para gerenciamento de resgates de pontos"
+    }
+  ]
+}

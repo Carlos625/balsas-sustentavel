@@ -1,0 +1,281 @@
+### API Balsas Sustentável - Arquivo de Testes
+### Use a extensão REST Client do VS Code para testar
+
+@baseUrl = http://localhost:3000/api
+@token = SEU_TOKEN_AQUI
+
+### ========================================
+### AUTENTICAÇÃO
+### ========================================
+
+### Registrar Novo Usuário
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "nome": "Carlos Silva",
+  "email": "carlos@email.com",
+  "senha": "senha123",
+  "telefone": "(99) 98765-4321"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "carlos@email.com",
+  "senha": "senha123"
+}
+
+### Obter Usuário Logado
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### ========================================
+### USUÁRIOS
+### ========================================
+
+### Listar Todos os Usuários (Admin)
+GET {{baseUrl}}/usuarios
+Authorization: Bearer {{token}}
+
+### Obter Usuário por ID
+GET {{baseUrl}}/usuarios/ID_DO_USUARIO
+Authorization: Bearer {{token}}
+
+### Atualizar Usuário
+PUT {{baseUrl}}/usuarios/ID_DO_USUARIO
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Carlos Silva Santos",
+  "telefone": "(99) 99999-9999"
+}
+
+### Obter Pontos do Usuário
+GET {{baseUrl}}/usuarios/ID_DO_USUARIO/pontos
+Authorization: Bearer {{token}}
+
+### ========================================
+### OCORRÊNCIAS
+### ========================================
+
+### Criar Ocorrência
+POST {{baseUrl}}/ocorrencias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bairro": "Centro",
+  "tipo": "acumulo",
+  "descricao": "Lixo acumulado na esquina da Rua Principal com Av. Central"
+}
+
+### Listar Todas as Ocorrências
+GET {{baseUrl}}/ocorrencias
+
+### Filtrar por Bairro
+GET {{baseUrl}}/ocorrencias?bairro=Centro
+
+### Filtrar por Tipo
+GET {{baseUrl}}/ocorrencias?tipo=queimada
+
+### Filtrar por Status
+GET {{baseUrl}}/ocorrencias?status=pendente
+
+### Obter Ocorrência por ID
+GET {{baseUrl}}/ocorrencias/ID_DA_OCORRENCIA
+
+### Minhas Ocorrências
+GET {{baseUrl}}/ocorrencias/user/minhas
+Authorization: Bearer {{token}}
+
+### Atualizar Status (Admin)
+PUT {{baseUrl}}/ocorrencias/ID_DA_OCORRENCIA/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "resolvido",
+  "observacoes": "Problema resolvido pela equipe de limpeza"
+}
+
+### Deletar Ocorrência
+DELETE {{baseUrl}}/ocorrencias/ID_DA_OCORRENCIA
+Authorization: Bearer {{token}}
+
+### Estatísticas de Ocorrências
+GET {{baseUrl}}/ocorrencias/stats
+
+### ========================================
+### ENTREGAS DE RESÍDUOS
+### ========================================
+
+### Agendar Entrega
+POST {{baseUrl}}/entregas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tipoResiduo": "latinhas",
+  "peso": 2.5,
+  "postoColeta": "centro",
+  "horario": "manha",
+  "dataEntrega": "2025-10-25"
+}
+
+### Minhas Entregas
+GET {{baseUrl}}/entregas/minhas
+Authorization: Bearer {{token}}
+
+### Listar Todas as Entregas (Admin)
+GET {{baseUrl}}/entregas
+Authorization: Bearer {{token}}
+
+### Filtrar por Status
+GET {{baseUrl}}/entregas?status=agendado
+Authorization: Bearer {{token}}
+
+### Obter Entrega por ID
+GET {{baseUrl}}/entregas/ID_DA_ENTREGA
+Authorization: Bearer {{token}}
+
+### Confirmar Entrega (Admin) - Adiciona pontos ao usuário
+PUT {{baseUrl}}/entregas/ID_DA_ENTREGA/confirmar
+Authorization: Bearer {{token}}
+
+### Cancelar Entrega
+PUT {{baseUrl}}/entregas/ID_DA_ENTREGA/cancelar
+Authorization: Bearer {{token}}
+
+### Estatísticas de Entregas (Admin)
+GET {{baseUrl}}/entregas/stats
+Authorization: Bearer {{token}}
+
+### ========================================
+### RESGATES DE PONTOS
+### ========================================
+
+### Ver Opções de Resgate (Público)
+GET {{baseUrl}}/resgates/opcoes
+
+### Criar Resgate - Combustível
+POST {{baseUrl}}/resgates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "parceiro": "combustivel",
+  "pontosUtilizados": 500
+}
+
+### Criar Resgate - Energia
+POST {{baseUrl}}/resgates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "parceiro": "energia",
+  "pontosUtilizados": 600
+}
+
+### Criar Resgate - Supermercado
+POST {{baseUrl}}/resgates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "parceiro": "supermercado",
+  "pontosUtilizados": 400
+}
+
+### Meus Resgates
+GET {{baseUrl}}/resgates/meus
+Authorization: Bearer {{token}}
+
+### Listar Todos os Resgates (Admin)
+GET {{baseUrl}}/resgates
+Authorization: Bearer {{token}}
+
+### Obter Resgate por ID
+GET {{baseUrl}}/resgates/ID_DO_RESGATE
+Authorization: Bearer {{token}}
+
+### Utilizar Resgate (Admin)
+PUT {{baseUrl}}/resgates/ID_DO_RESGATE/utilizar
+Authorization: Bearer {{token}}
+
+### Cancelar Resgate (Devolve pontos)
+PUT {{baseUrl}}/resgates/ID_DO_RESGATE/cancelar
+Authorization: Bearer {{token}}
+
+### Estatísticas de Resgates (Admin)
+GET {{baseUrl}}/resgates/stats
+Authorization: Bearer {{token}}
+
+### ========================================
+### TESTE COMPLETO - FLUXO DO USUÁRIO
+### ========================================
+
+### 1. Registrar
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{
+  "nome": "Maria Santos",
+  "email": "maria@email.com",
+  "senha": "senha123"
+}
+
+### 2. Login (copie o token!)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "maria@email.com",
+  "senha": "senha123"
+}
+
+### 3. Criar Ocorrência
+POST {{baseUrl}}/ocorrencias
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bairro": "Vila Nova",
+  "tipo": "descarte",
+  "descricao": "Descarte irregular de móveis velhos"
+}
+
+### 4. Agendar Entrega de Resíduos
+POST {{baseUrl}}/entregas
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tipoResiduo": "latinhas",
+  "peso": 1.5,
+  "postoColeta": "centro",
+  "horario": "manha",
+  "dataEntrega": "2025-10-25"
+}
+
+### 5. Ver Meus Pontos
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### 6. Resgatar Benefício
+POST {{baseUrl}}/resgates
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "parceiro": "supermercado",
+  "pontosUtilizados": 400
+}
+
+### 7. Ver Meus Resgates
+GET {{baseUrl}}/resgates/meus
+Authorization: Bearer {{token}}

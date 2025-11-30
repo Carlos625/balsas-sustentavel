@@ -24,7 +24,7 @@ h1, h2, h3 { line-height: 1.2; margin-bottom: 1rem; font-weight: 700; }
 h2 { font-size: 2.8rem; text-align: center; }
 .section-subtitle { text-align: center; font-size: 1.1rem; max-width: 600px; margin: 0 auto 3rem auto; color: #6c757d; }
 .section-dark .section-subtitle { color: #adb5bd; }
-section { padding: 6rem 0; overflow-x: hidden; }
+section { padding: 6rem 0; }
 
 /* Animação de Entrada */
 section > .container {
@@ -315,6 +315,20 @@ footer { background-color: #000; color: #6c757d; text-align: center; padding: 2r
 .btn-resgatar:hover {
     background-color: var(--secondary-color);
     transform: scale(1.05);
+}
+
+/* Seção de INFORMAÇÕES com um fundo diferente */
+.section-info {
+  background: #dcf3e2; /* cinza bem claro puxado pro verde */
+}
+
+/* De quebra, deixa os cards de informação mais “verdinhos” */
+.section-info .info-card {
+  border-top: 10px solid #0e753a;  /* verde principal */
+}
+
+.section-info .info-card h3 {
+  color: #1f8b4c;
 }
 
 /* 5. Responsividade (Media Queries) */
